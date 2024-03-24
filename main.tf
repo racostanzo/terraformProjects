@@ -28,18 +28,28 @@ resource "aws_instance" "jenkins_instance" {
 # Step 3: Create Security Group for Jenkins
 resource "aws_security_group" "jenkins_sg" {
   name        = "jenkins-sg"
-  description = "Security group for Jenkins"
+  description = "Allow port 22 and 8080"
 
   ingress {
+    description = "Allow SSH traffic"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["YOUR_IP/32"]  # Replace YOUR_IP with your actual IP address
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   ingress {
+    description = "Allow 8080 traffic"
     from_port   = 8080
     to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    description = "Allow HTTPS traffic"
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
